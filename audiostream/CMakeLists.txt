@@ -288,8 +288,7 @@ set_target_properties( audiostream PROPERTIES
   UNITY_BUILD_BATCH_SIZE 16
 )
 
-target_link_libraries       ( audiostream PUBLIC pcm
-                                          PRIVATE Boost::iostreams Boost::filesystem Boost::system ${codec_libraries})
+target_link_libraries       ( audiostream PUBLIC pcm PRIVATE CONAN_PKG::boost ${codec_libraries})
 
 if(MSVC)
   target_compile_options( audiostream PRIVATE /wd4351 )  # MSVC new behaviour warning

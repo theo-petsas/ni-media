@@ -38,7 +38,7 @@ target_include_directories  ( pcm INTERFACE
 
 target_sources              ( pcm INTERFACE "$<BUILD_INTERFACE:${FILES_All}>" )
 
-target_link_libraries       ( pcm INTERFACE Boost::boost )
+target_link_libraries       ( pcm INTERFACE CONAN_PKG::boost )
 
 
 #-----------------------------------------------------------------------------------------------------------------------
