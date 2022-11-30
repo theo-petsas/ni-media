@@ -26,12 +26,15 @@ class NiMediaConan(ConanFile):
 
     def package(self):
         self.copy("*.h", dst="include", src="include", keep_path=True)
-
         self.copy("*.lib", dst="lib", keep_path=False)
         self.copy("*.dll", dst="bin", keep_path=False)
         self.copy("*.so", dst="lib", keep_path=False)
         self.copy("*.dylib", dst="lib", keep_path=False)
         self.copy("*.a", dst="lib", keep_path=False)
+        self.copy("*.h", src="audiostream/inc", dst="include/", keep_path=True)
+        self.copy("*.h", src="pcm/inc", dst="include/", keep_path=True)
+        self.copy("*.a", src="audiostream/", dst="lib/", keep_path=True)
+
 
     def package_info(self):
         self.cpp_info.libs = ["audiostream", "pcm"]
