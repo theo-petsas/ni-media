@@ -38,8 +38,6 @@ if( NIMEDIA_OPEN_SOURCE )
     set( CMAKE_BUILD_TYPE Debug FORCE )
   endif()
 
-  find_package(Boost "1.61.0" REQUIRED COMPONENTS iostreams filesystem system program_options regex)
-
 else()
 
   if( CMAKE_PROJECT_NAME STREQUAL "ni-media" )
@@ -62,13 +60,6 @@ else()
     set( SCOPED_DISABLE_UNITY_BUILDS 1 )
   endif()
 
-  find_package(NIBoost REQUIRED)
-  add_library(Boost::boost              ALIAS boost_header_only_interface)
-  add_library(Boost::iostreams          ALIAS boost_iostreams)
-  add_library(Boost::filesystem         ALIAS boost_filesystem)
-  add_library(Boost::system             ALIAS boost_system)
-  add_library(Boost::program_options    ALIAS boost_program_options)
-
 endif()
 
 
@@ -90,7 +81,7 @@ add_subdirectory( audiostream )
 
 # for backwards compatibility:
 add_library( ni-media INTERFACE )
-target_link_libraries( ni-media INTERFACE audiostream pcm )
+target_link_libraries( ni-media INTERFACE audiostream pcm CONAN_PKG::boost)
 
 if( NOT NIMEDIA_OPEN_SOURCE )
   if( NI_CLANG_DEBUG )
