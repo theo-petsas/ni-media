@@ -1,0 +1,38 @@
+diff --git a/audiostream/CMakeLists.txt b/audiostream/CMakeLists.txt
+index ace785c..76b9637 100644
+--- a/audiostream/CMakeLists.txt
++++ b/audiostream/CMakeLists.txt
+@@ -314,7 +314,7 @@ target_include_directories  ( audiostream
+                             )
+ 
+ target_link_libraries       ( audiostream PUBLIC pcm
+-                                          PRIVATE Boost::iostreams Boost::filesystem Boost::system ${codec_libraries})
++                                          PRIVATE CONAN_PKG::boost ${codec_libraries})
+ 
+ if(MSVC)
+   target_compile_options( audiostream PRIVATE /wd4351 )  # MSVC new behaviour warning
+diff --git a/cmake/ni-mediaConfig.cmake.in b/cmake/ni-mediaConfig.cmake.in
+index 0e49dbb..c586741 100644
+--- a/cmake/ni-mediaConfig.cmake.in
++++ b/cmake/ni-mediaConfig.cmake.in
+@@ -1,7 +1,5 @@
+ @PACKAGE_INIT@
+ 
+-find_package(Boost "1.61.0" REQUIRED COMPONENTS iostreams filesystem system program_options regex)
+-
+ # for flac and ogg we want to find our own findPackage.cmake modules
+ # hence we temporarely set CMAKE_MODULE_PATH to this directory
+ set(NIMEDIA_PREVIOUS_MODULE_PATH ${CMAKE_MODULE_PATH})
+diff --git a/pcm/CMakeLists.txt b/pcm/CMakeLists.txt
+index 21cc315..8701dbb 100644
+--- a/pcm/CMakeLists.txt
++++ b/pcm/CMakeLists.txt
+@@ -38,7 +38,7 @@ target_include_directories  ( pcm INTERFACE
+ 
+ target_sources              ( pcm INTERFACE "$<BUILD_INTERFACE:${FILES_All}>" )
+ 
+-target_link_libraries       ( pcm INTERFACE Boost::boost )
++target_link_libraries       ( pcm INTERFACE CONAN_PKG::boost )
+ 
+ 
+ #-----------------------------------------------------------------------------------------------------------------------
