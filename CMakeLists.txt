@@ -8,12 +8,31 @@ project( ni-media
   VERSION 0.1.0
 )
 
+if(NOT DEFINED CMAKE_BUILD_TYPE OR CMAKE_BUILD_TYPE MATCHES "")
+  set(CMAKE_BUILD_TYPE Debug)
+endif()
+
+############ Conan
+if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
+  message(
+    STATUS
+      "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
+  file(DOWNLOAD "https://github.com/conan-io/cmake-conan/raw/v0.14/conan.cmake"
+       "${CMAKE_BINARY_DIR}/conan.cmake")
+endif()
+
+include(${CMAKE_BINARY_DIR}/conan.cmake)
+
+conan_cmake_run(CONANFILE conanfile.py BASIC_SETUP CMAKE_TARGETS BUILD missing)
+
+##################
+
+
 option( NIMEDIA_OPEN_SOURCE                   "Build ni-media open source version"    ON )
 option( NIMEDIA_TREAT_WARNINGS_AS_ERRORS      "Treat compile warnings as errors"      OFF)
+option( NIMEDIA_TESTS      "Treat compile warnings as errors"      OFF)
 
 if( CMAKE_PROJECT_NAME STREQUAL "ni-media" )
-  option( NIMEDIA_TESTS "Build ni-media Tests" ON )
-else()
   option( NIMEDIA_TESTS "Build ni-media Tests" OFF )
 endif()
 
@@ -32,11 +51,6 @@ if( NIMEDIA_OPEN_SOURCE )
     set(LINUX 1)
   endif()
 
-  if( CMAKE_BUILD_TYPE MATCHES Coverage )
-    add_compile_options( -g -O0 --coverage )
-    set( CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lgcov --coverage" )
-    set( CMAKE_BUILD_TYPE Debug FORCE )
-  endif()
 
 else()
 
